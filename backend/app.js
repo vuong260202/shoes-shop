@@ -13,11 +13,7 @@ var app = express();
 app.use(cors())
 app.use(helmet())
 
-
-require('./models/connect')
-
-var authRouter = require('./routes/auth')
-
+require('./models/connectDB')
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -27,7 +23,14 @@ app.use(express.json());
 app.use(passport.initialize());
 app.use(express.urlencoded({ extended: true }));
 
+//--------api
+var indexRouter = require('./routes/index')
+var authRouter = require('./routes/auth')
+
+app.use('/', indexRouter)
 app.use('/auth', authRouter)
+
+//------------
 
 app.use(function(req, res, next) {
   return res.status(404).json({

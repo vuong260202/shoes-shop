@@ -8,15 +8,14 @@ let sequelize = new Sequelize(CONFIG.db.dbname, 'root', '', {
     dialect: 'mysql'
 });
 
-  // console.log('connecting to postgres', process.env.POSTGRESQL_HOST);
 sequelize
 .authenticate()
 .then(() => {
     console.log('Connection has been established successfully.');
     global.sequelize = sequelize;
 
-    // Init all models here
     require('./mysql/User')(sequelize);
+
     // Add other models as needed...
 
 })

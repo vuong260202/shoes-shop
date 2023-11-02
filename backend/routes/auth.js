@@ -6,31 +6,17 @@ let router = express.Router();
 
 let WebUtils = require('../utils/webUtils')
 let CONFIG = require('../config')
+let {valid} = require('../utils/validUtils')
 
 /**
  * @ngdoc method {post} /auth/login login
  * @group auth
- * 
+ *
  * @RequestBody {String} username
  * @RequestBody {String} password
  */
-router.post('/login', (req, res, next) => {
-    let schema = Joi.object({
-        username: Joi.string().required(),
-        password: Joi.string().required(),
-    })
-    let { error } = schema.validate(req.body)
-    if (error) {
-        console.log(error);
-        return res.status(400).json({
-            status: 400,
-            message: (error.details && error.details[0]) ? error.details[0].message : 'Invalid params'
-        })
-    }
-    next();
-}, async (req, res) => {
+router.post('/login', valid.authValid.Login, async (req, res) => {
     let User = global.sequelizeModels.User;
-    let Session = global.sequelizeModels.Session;
     let user;
     try {
         user = await User.findOne({
@@ -43,7 +29,7 @@ router.post('/login', (req, res, next) => {
         console.log('error: ', e);
         return res.status(500).json({
             status: 500,
-            message: 'internal server error'
+            message: 'Internal server error'
         })
     }
 
@@ -54,18 +40,13 @@ router.post('/login', (req, res, next) => {
         })
     }
 
-    // let token = jwt.sign({ user }, 'secretKey', expires: '1h');
-
     return res.status(200).json({
         status: 200,
         message: 'success',
-        // data: {
-        //     token: token
-        // }
     })
 })
 
-router.post('/signup', async (req, res) => {
+router.post('/signup', valid.authValid.Signup, async (req, res) => {
     const { username, password } = req.body;
 
     let User = global.sequelizeModels.User
@@ -86,7 +67,7 @@ router.post('/signup', async (req, res) => {
     }
 })
 
-router.put('/update-password', async (req, res) => {
+router.put('/update-password', valid.authValid.UpdatePassword, async (req, res) => {
     const { currentPassword, newPassword } = req.body;
 
     let User = global.sequelizeModels.User
