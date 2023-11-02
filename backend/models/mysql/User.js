@@ -26,6 +26,10 @@ module.exports = function (sequelize) {
           this.setDataValue('password', hashedPassword);
         }
       },
+      // createAt:{
+      //   field: 'create_at',
+      //   type: 
+      // }
       // Add other attributes here...
     },
     {
