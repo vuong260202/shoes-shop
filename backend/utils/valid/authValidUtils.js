@@ -18,43 +18,67 @@ let login = (req, res, next) => {
     next();
 }
 
-let signup = (req, res, next) => {
-    let schema = Joi.object({
-        // fullName: Joi.string().required(),
-        username: Joi.string().required(),
-        password: Joi.string().required(),
+let signup = function(req, res, next){
+    const schema = Joi.object({
+      username: Joi.string().required(),
+      password: Joi.string().empty()
+      .messages({
+        'string.empty': '"Password" is not allowed to be empty',
+        'string.pattern.base': 'Password must be in 8-16 characters, including at least 1 uppercase, 1 lowercase, 1 special character, 1 number',
+        'string.min': 'Password must be in 8-16 characters, including at least 1 uppercase, 1 lowercase, 1 special character, 1 number',
+        'string.max': 'Password must be in 8-16 characters, including at least 1 uppercase, 1 lowercase, 1 special character, 1 number'
+      
+      })
+      .min(8).max(16)
+      .pattern(/\d/)
+      .pattern(/[a-z]/)
+      .pattern(/[A-Z]/)
+      .pattern(/[^a-zA-Z0-9]/)
+      .required(),
+      email: Joi.string().email().required(),
+      fullname: Joi.string().required(),
     })
-
     let { error } = schema.validate(req.body)
-
     if (error) {
-        console.log(error);
-        return res.status(400).json({
-            status: 400,
-            message: (error.details && error.details[0]) ? error.details[0].message : 'Invalid params'
-        })
+      console.log(error);
+      return res.status(400).json({
+        status: 400,
+        message: (error.details && error.details[0]) ? error.details[0].message : 'Invalid params'
+      })
     }
-    next();
+    return next();
 }
 
-let UpdatePassword = (req, res, next) => {
-    let schema = Joi.object({
-        // fullName: Joi.string().required(),
-        newPassword: Joi.string().required(),
-        currentPassword: Joi.string().required(),
-    })
-
-    let { error } = schema.validate(req.body)
-
-    if (error) {
-        console.log(error);
-        return res.status(400).json({
-            status: 400,
-            message: (error.details && error.details[0]) ? error.details[0].message : 'Invalid params'
+let UpdatePassword = function(req, res, next){
+    const schema = Joi.object({
+      currentPassword: Joi.string().required(),
+      newPassword: Joi.string().empty()
+        .messages({
+          'string.empty': '"Password" is not allowed to be empty',
+          'string.pattern.base': 'Password must be in 8-16 characters, including at least 1 uppercase, 1 lowercase, 1 special character, 1 number',
+          'string.min': 'Password must be in 8-16 characters, including at least 1 uppercase, 1 lowercase, 1 special character, 1 number',
+          'string.max': 'Password must be in 8-16 characters, including at least 1 uppercase, 1 lowercase, 1 special character, 1 number'
+        
         })
+        .min(8).max(16)
+        .pattern(/\d/)
+        .pattern(/[a-z]/)
+        .pattern(/[A-Z]/)
+        .pattern(/[^a-zA-Z0-9]/)
+        .required(),
+      site: Joi.string().valid('admin', 'user').default('user').optional()
+    })
+    let { error } = schema.validate(req.body)
+    if (error) {
+      console.log(error);
+      return res.status(400).json({
+        status: 400,
+        message: (error.details && error.details[0]) ? error.details[0].message : 'Invalid body'
+      })
     }
-    next();
-}
+  
+    return next();
+  }
 
 module.exports = {
     Login: login,

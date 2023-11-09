@@ -15,6 +15,7 @@ sequelize
     global.sequelize = sequelize;
 
     require('./mysql/User')(sequelize);
+    require('./mysql/Session')(sequelize);
 
     // Add other models as needed...
 

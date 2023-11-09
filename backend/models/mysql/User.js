@@ -4,8 +4,9 @@ var bcrypt = require('bcrypt-nodejs');
 const tableName = 'users'
 
 module.exports = function (sequelize) {
-  const User = sequelize.define(tableName,
+  const User = sequelize.define('users',
     {
+      // attributes
       id: {
         field: 'ID',
         type: Sequelize.INTEGER,
@@ -13,28 +14,87 @@ module.exports = function (sequelize) {
         primaryKey: true
       },
       username: {
-        field: 'username',
-        type: Sequelize.STRING,
-        allowNull: false
+        field: 'USERNAME',
+        type: Sequelize.STRING(100),
+        defaultValue: '',
+        allowNull: false,
       },
       password: {
-        field: 'password',
-        type: Sequelize.STRING,
+        field: 'PASSWORD',
+        type: Sequelize.STRING(200),
+        defaultValue: '',
         allowNull: false,
-        set(value) {
-          const hashedPassword = bcrypt.hashSync(value, bcrypt.genSaltSync(8), null);
-          this.setDataValue('password', hashedPassword);
-        }
       },
-      // createAt:{
-      //   field: 'create_at',
-      //   type: 
-      // }
-      // Add other attributes here...
+      email: {
+        field: 'EMAIL',
+        type: Sequelize.STRING(100),
+        defaultValue: '',
+        allowNull: false,
+      },
+      fullname: {
+        field: 'FULL_NAME',
+        type: Sequelize.STRING(100),
+        defaultValue: '',
+        allowNull: false,
+      },
+      lastLogin: {
+        field: 'LAST_LOGIN',
+        type: 'TIMESTAMP',
+        allowNull: true
+      },
+      resetToken: {
+        field: 'RESET_TOKEN',
+        type: Sequelize.STRING(100),
+        defaultValue: '',
+        allowNull: false
+      },
+      resetTokenExpiration: {
+        field: 'RESET_TOKEN_EXPIRATION',
+        type: Sequelize.DATE,
+        allowNull: true
+      },
+      role: {
+        field: 'ROLE',
+        type: Sequelize.ENUM('user', 'admin'),
+        defaultValue: 'user',
+        allowNull: false
+      },
+      lockedUntil: {
+        field: 'LOCKED_UNTIL',
+        type: 'TIMESTAMP',
+        allowNull: false,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
+      },
+      attemptTimes: {
+        field: 'ATTEMP_TIMES',
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        defaultValue: 0
+      },
+      createdAt: {
+        field: 'CREATED_AT',
+        type: 'TIMESTAMP',
+        allowNull: false,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
+      },
+      updatedAt: {
+        field: 'UPDATED_AT',
+        type: 'TIMESTAMP',
+        allowNull: false,
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
+      },
     },
     {
       tableName: tableName,
-      timestamps: false
+      timestamps: false,
+      // instanceMethods: {
+      //   hashPassword: function (plainPassword) {
+      //     return bcrypt.hashSync(plainPassword, bcrypt.genSaltSync(8), null);
+      //   },
+      //   validPassword: function (plainPassword) {
+      //     return bcrypt.compareSync(plainPassword, this.password);
+      //   }
+      // }
     }
   );
 
@@ -55,4 +115,4 @@ module.exports = function (sequelize) {
   User.prototype.validPassword = function (plainPassword) {
     return bcrypt.compareSync(plainPassword, this.password);
   }
-};
+}
