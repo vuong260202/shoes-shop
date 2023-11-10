@@ -16,6 +16,7 @@ sequelize
 
     require('./mysql/User')(sequelize);
     require('./mysql/Session')(sequelize);
+    require('./mysql/Product')(sequelize);
 
     // Add other models as needed...
 

@@ -55,9 +55,11 @@ app.use(express.urlencoded({ extended: true }));
 //--------api
 var indexRouter = require('./routes/index')
 var authRouter = require('./routes/auth')
+var productRouter = require('./routes/product')
 
 app.use('/', indexRouter)
 app.use('/auth', authRouter)
+app.use('/product', productRouter)
 //------------
 
 app.use(function(req, res, next) {

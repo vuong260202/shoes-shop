@@ -10,7 +10,7 @@ const _ = require('lodash');
 const CONFIG = require('../config');
 
 const mailUtils = require('../utils/MailUtils');
-const WebBEUtils = require('../utils/webUtils');
+const WebUtils = require('../utils/webUtils');
 const valid = require('../utils/valid/authValidUtils');
 
 /* GET home page. */
@@ -164,7 +164,7 @@ router.post("/signup", valid.Signup, (req, res, next) => {
  * @apiSuccess (200) {String} message Success message.
  * @apiError (400) {String} message Error message.
  */
-router.put('/update-password', WebBEUtils.isLoggedIn, valid.UpdatePassword, checkDbConnector, async (req, res) => {
+router.put('/update-password', WebUtils.isLoggedIn, valid.UpdatePassword, checkDbConnector, async (req, res) => {
   const { currentPassword, newPassword } = req.body;
 
   if (currentPassword.localeCompare(newPassword) == 0) {
@@ -212,28 +212,7 @@ router.put('/update-password', WebBEUtils.isLoggedIn, valid.UpdatePassword, chec
  * @apiSuccess (200) {String} message Success message.
  * @apiError (400) {String} message Error message.
  */
-router.post('/reset-password-request', checkDbConnector, async function(req, res, next){
-  const schema = Joi.object({
-    username: Joi.string().required(),
-  })
-  let { error } = schema.validate(req.body)
-  if (error) {
-    console.log(error);
-    return res.status(400).json({
-      status: 400,
-      message: (error.details && error.details[0]) ? error.details[0].message : 'Invalid params'
-    })
-  }
-
-  let user = await global.sequelizeModels.User.findOne({where: {username: req.body.username}});
-  if(!user) {
-    return res.status(400).json({
-      status: 400,
-      message: 'Sorry, no account was found.' });
-  }
-
-  return next();
-}, async (req, res) => {
+router.post('/reset-password-request', checkDbConnector, valid.ResetPasswordRequest, async (req, res) => {
   try {
     const { username } = req.body;
     let user = await global.sequelizeModels.User.findOne({where: {username: username}});
@@ -285,41 +264,7 @@ router.post('/reset-password-request', checkDbConnector, async function(req, res
  * @apiSuccess (200) {String} message Success message.
  * @apiError (400) {String} message Error message.
  */
-router.put('/reset-password', async function(req, res, next){
-  const schema = Joi.object({
-    resetToken: Joi.string().required(),
-    newPassword: Joi.string().empty()
-      .messages({
-        'string.empty': '"Password" is not allowed to be empty',
-        'string.pattern.base': 'Password must be in 8-16 characters, including at least 1 uppercase, 1 lowercase, 1 special character, 1 number',
-        'string.min': 'Password must be in 8-16 characters, including at least 1 uppercase, 1 lowercase, 1 special character, 1 number',
-        'string.max': 'Password must be in 8-16 characters, including at least 1 uppercase, 1 lowercase, 1 special character, 1 number'
-      })
-      .min(8).max(16)
-      .pattern(/\d/)
-      .pattern(/[a-z]/)
-      .pattern(/[A-Z]/)
-      .pattern(/[^a-zA-Z0-9]/)
-      .required(),
-  })
-  let { error } = schema.validate(req.body)
-  if (error) {
-    console.log(error);
-    return res.status(400).json({
-      status: 400,
-      message: (error.details && error.details[0]) ? error.details[0].message : 'Invalid params'
-    })
-  }
-
-  let user = await global.sequelizeModels.User.findOne({where: { resetToken: req.body.resetToken }});
-  if (!user) {
-    return res.status(400).json({
-      status: 400,
-      message: 'Sorry, no account was found.' });
-  }
-
-  return next();
-}, checkDbConnector, async (req,res) => {
+router.put('/reset-password', valid.ResetPassword, checkDbConnector, async (req,res) => {
   try {
     const {resetToken, newPassword} = req.body;
 
