@@ -35,6 +35,11 @@ module.exports = function (sequelize) {
         type: Sequelize.ENUM('sold', 'unsold'),
         defaultValue: 'unsold'
       },
+      total: {
+        field: 'TOTAL',
+        type: Sequelize.INTEGER,
+        defaultValue: 0
+      },
       createdAt: {
         field: 'CREATED_AT',
         type: 'TIMESTAMP',
