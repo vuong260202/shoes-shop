@@ -1,0 +1,31 @@
+/* Định dạng cho nút */
+button {
+  padding: 10px 20px;
+  margin: 10px;
+  font-size: 16px;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  background-color: #3498db;
+  color: white;
+  transition: background-color 0.3s ease;
+  width: 150px; /* Chiều rộng cố định */
+  text-align: center; /* Căn giữa nội dung */
+}
+
+/* Định dạng cho nút khi di chuột vào */
+button:hover {
+  background-color: #2980b9;
+}
+
+/* Định dạng cho nút khi được nhấn */
+button:active {
+  background-color: #21618c;
+}
+
+.div-container {
+  display: grid;
+  justify-items: center;
+  width: 100%;
+
+}

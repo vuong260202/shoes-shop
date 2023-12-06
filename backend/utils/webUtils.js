@@ -10,6 +10,7 @@ function isLoggedIn(req, res, next) {
   // } else {
   //   console.log('cookie expired');
   // }
+  console.log(req);
   if (req.headers.authorization) {
     console.log('checking jwt');
     return passport.authenticate('jwt-auth', { session: false }, (err, account) => {

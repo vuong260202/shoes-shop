@@ -1,11 +1,14 @@
+var Joi = require('joi');
+
 
 let filterProduct = (req, res, next) => {
     const schema = Joi.object({
-        sort: Joi.string().required(),
-        filters: Joi.string().required(),
-        page: Joi.integer().min(1).optional(),
-        pageSize: Joi.integer().min(10).max(20).optional(),
-    })
+        // token: Joi.string().required(),
+        sort: Joi.string().optional(),
+        filters: Joi.object().optional(),
+        page: Joi.number().integer().min(1).optional(),
+        pageSize: Joi.number().integer().min(10).max(20).optional(),
+    });
     let { error } = schema.validate(req.body)
     if (error) {
         console.log(error);

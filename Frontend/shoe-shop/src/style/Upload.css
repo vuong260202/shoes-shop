@@ -1,0 +1,15 @@
+.upload-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .upload-form {
+    max-width: 600px;
+    width: 100%;
+    padding: 15px;
+    /* border: 1px solid #ccc; */
+    /* border-radius: 5px; */
+    margin-top: 20px;
+  }

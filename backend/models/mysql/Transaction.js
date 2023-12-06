@@ -1,10 +1,10 @@
 const Sequelize = require('sequelize');
 // var bcrypt = require('bcrypt-nodejs');
 
-const tableName = 'products'
+const tableName = 'transactions'
 
 module.exports = function (sequelize) {
-  const Product = sequelize.define('products',
+  const Transaction = sequelize.define('transactions',
     {
       // attributes
       id: {
@@ -13,33 +13,48 @@ module.exports = function (sequelize) {
         autoIncrement: true,
         primaryKey: true
       },
-      productName: {
-        field: 'PRODUCT_NAME',
-        type: Sequelize.STRING(100),
-        defaultValue: '',
-        allowNull: false,
-      },
-      price: {
-        field: 'PRICE',
+      userId: {
+        field: 'USER_ID',
         type: Sequelize.INTEGER,
         allowNull: true
       },
-      category: {
-        field: 'CATEGORY',
+      numberPhone:{
+        field: 'NUMBER_PHONE',
+        type: Sequelize.STRING(100),
+        allowNull: true
+      },
+      name: {
+        field: 'NAME',
         type: Sequelize.STRING(100),
         defaultValue: '',
         allowNull: false,
+      },
+      productId: {
+        field: 'PRODUCT_ID',
+        type: Sequelize.INTEGER,
+        allowNull: true
       },
       total: {
         field: 'TOTAL',
-        type: Sequelize.INTEGER,
-        defaultValue: 0,
-      },
-      path: {
-        field: 'PATH',
         type: Sequelize.STRING(100),
         defaultValue: '',
         allowNull: false,
+      },
+      address: {
+        field: 'ADDRESS',
+        type: Sequelize.STRING(100),
+        defaultValue: '',
+        allowNull: false,
+      },
+      amount: {
+        field: 'AMOUNT',
+        type: Sequelize.INTEGER,
+        allowNull: true
+      },
+      status: {
+        field: 'STATUS',
+        type: Sequelize.ENUM('pending', 'done'),
+        defaultValue: 'pending'
       },
       createdAt: {
         field: 'CREATED_AT',
@@ -47,13 +62,8 @@ module.exports = function (sequelize) {
         allowNull: false,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
       },
-      size: {
-        field: 'SIZE',
-        type: Sequelize.INTEGER,
-        defaultValue: '30'
-      },
-      updateAt: {
-        field: 'UPDATE_AT',
+      doneAt: {
+        field: 'DONE_AT',
         type: 'TIMESTAMP',
         allowNull: false,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
@@ -65,14 +75,14 @@ module.exports = function (sequelize) {
     }
   );
 
-  Product.sync({force: false, alter: true}).then(() => {
+  Transaction.sync({force: false, alter: true}).then(() => {
     if (!global.sequelizeModels) {
       global.sequelizeModels = {}
     }
-    global.sequelizeModels.Product = Product
+    global.sequelizeModels.Transaction = Transaction
     console.log('sync Product done')
 
   });
 
-  return Product
+  return Transaction
 }

@@ -351,6 +351,13 @@ router.put('/check-token-expire', checkDbConnector, async (req, res) => {
   }
 });
 
+router.get('/get-role', WebUtils.isLoggedIn, async (req, res) => {
+  return res.status(200).json({
+    status: 200,
+    role: req.user.role
+  })
+})
+
 function checkDbConnector(req, res, next) {
   if (!global.sequelizeModels || !global.sequelizeModels.User) {
     return res.status(500).json({
