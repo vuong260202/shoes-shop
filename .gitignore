@@ -2,3 +2,6 @@
 
 Backend/node_modules/
 Backend/config/index.js
+
+#Frontend
+Frontend/shoe-shop/node_modules

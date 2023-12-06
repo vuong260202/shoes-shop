@@ -1,0 +1,57 @@
+/* Signup.css */
+
+/* Định dạng chung cho phần tử div */
+.div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    font-family: Arial, sans-serif;
+  }
+  
+  /* Định dạng cho tiêu đề */
+  h2 {
+    margin-bottom: 20px;
+  }
+  
+  /* Định dạng cho input */
+  input {
+    padding: 10px;
+    margin: 5px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    width: 250px;
+  }
+  
+  /* Định dạng cho nút */
+  button {
+    padding: 10px 20px;
+    margin: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+    background-color: #3498db;
+    color: white;
+    width: 250px;
+    transition: background-color 0.3s ease;
+  }
+  
+  /* Định dạng cho nút khi di chuột vào */
+  button:hover {
+    background-color: #2980b9;
+  }
+  
+  /* Định dạng cho nút khi được nhấn */
+  button:active {
+    background-color: #21618c;
+  }
+  
+  /* Định dạng cho thông báo lỗi */
+  p {
+    color: red;
+    margin-top: 10px;
+  }
+  

@@ -1,0 +1,24 @@
+.img-logo{
+    width: 100px;
+    height: 100px;
+}
+
+.header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    /* margin: 0 20px; */
+    /* background: green; */
+}
+
+.logout{
+    width: 100px;
+}
+.logout > button {
+    width: 100%;
+}
+
+.profile-logo{
+    width: 50px;
+    height: 50px;
+}

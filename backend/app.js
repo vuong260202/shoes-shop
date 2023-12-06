@@ -16,6 +16,7 @@ let CONFIG = require('./config')
 
 var app = express();
 app.use(cors())
+
 app.use(helmet())
 app.use(flash());
 
@@ -23,7 +24,8 @@ require('./models/connectDB')
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
-
+app.use(express.static(path.join(__dirname, 'public')));
+// app.use('/uploads/img',express.static('./uploads/img'));
 app.use(bodyParser.json());
 
 require('./bootstrap')
@@ -45,6 +47,8 @@ app.use(session({
     expiration: 86400000 
   })
 }));
+
+// app.use(allowHeadersMiddleware);
 
 app.use(logger('dev'));
 app.use(express.json());
