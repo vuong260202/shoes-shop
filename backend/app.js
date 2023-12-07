@@ -60,10 +60,12 @@ app.use(express.urlencoded({ extended: true }));
 var indexRouter = require('./routes/index')
 var authRouter = require('./routes/auth')
 var productRouter = require('./routes/product')
+var transactionRouter = require('./routes/transaction')
 
 app.use('/', indexRouter)
 app.use('/auth', authRouter)
 app.use('/product', productRouter)
+app.use('/transaction', transactionRouter)
 //------------
 
 app.use(function(req, res, next) {

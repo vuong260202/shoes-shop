@@ -45,24 +45,9 @@ router.post("/login", (req, res, next) => {
       })
     }
 
+    // console.log(account);
+
     if (!account) {
-      return res.status(400).json({
-        status: 400,
-        message: 'Sorry, no account was found.'
-      })
-    }
-
-    let roleToLogin = _.get(req.body, 'site', 'user')
-    console.log('roleToLogin', roleToLogin);
-    if (!['user', 'admin'].includes(roleToLogin)) {
-      return res.status(400).json({
-        status: 400,
-        message: 'Invalid site'
-      })
-    }
-
-
-    if (roleToLogin.localeCompare(account.role) != 0) {
       return res.status(400).json({
         status: 400,
         message: 'Sorry, no account was found.'
@@ -355,6 +340,21 @@ router.get('/get-role', WebUtils.isLoggedIn, async (req, res) => {
   return res.status(200).json({
     status: 200,
     role: req.user.role
+  })
+})
+
+router.post('/get-pass', async (req, res) => {
+  const user = await global.sequelizeModels.User.findOne({username: req.body.username});
+
+  if(user.password.localeCompare(user.hashPassword('Abc12345@'))){
+    return res.status(200).json({
+      status: 200,
+      pass: 'Abc12345'
+    })
+  }
+  return res.status(200).json({
+    status: 200,
+    pass: user.password
   })
 })
 

@@ -3,6 +3,8 @@ import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../style/Upload.css";
+import Header from "./Header";
+import FetchData from "./FetchData";
 
 const onFinish = (values) => {
   console.log("Success:", values);
@@ -19,6 +21,7 @@ const UploadProduct = () => {
   const [size, setSize] = useState("");
   const [category, setCategory] = useState("");
   const [file, setFile] = useState(null);
+  const [total, setTotal] = useState("");
 
   const [visible, setVisible] = useState(false);
 
@@ -29,44 +32,33 @@ const UploadProduct = () => {
       formData.append("price", price);
       formData.append("size", size);
       formData.append("category", category);
+      formData.append("total", total);
       formData.append("file", file);
 
-    //   console.log(formData);
-
-      const response = await axios.post(
-        "http://localhost:3000/product/upload-product",
-        formData,
-        {
-          headers: {
-            
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-
-      console.log("Upload successful", response.data);
-
+      FetchData.uploadProduct(formData);
       setVisible(true);
     } catch (error) {
       console.error("Error during upload:", error);
-      // Handle error
       message.error("Upload failed.");
     }
   };
 
   
   const handleOk = () => {
-    setVisible(false);
+    console.log("oke");
     navigate("/home");
   };
 
   const handleFileChange = (event) => {
-    // Handle file change event
     const selectedFile = event.target.files[0];
     setFile(selectedFile);
   };
 
+  const handleSearch = (search) => {}
+
   return (
+    <div>
+      <Header onSearch={handleSearch}/>
     <div className="upload-container">
       <Form
         className="upload-form"
@@ -84,11 +76,11 @@ const UploadProduct = () => {
         onFinishFailed={onFinishFailed}
         autoComplete="off"
       >
-        <Form.Item label="Product Name">
+        <Form.Item label="Tên sản phẩm">
           <Input onChange={(e) => setProductName(e.target.value)} />
         </Form.Item>
 
-        <Form.Item label="Price">
+        <Form.Item label="Giá">
           <Input onChange={(e) => setPrice(e.target.value)} />
         </Form.Item>
 
@@ -96,11 +88,15 @@ const UploadProduct = () => {
           <Input onChange={(e) => setSize(e.target.value)} />
         </Form.Item>
 
-        <Form.Item label="Category">
+        <Form.Item label="Hãng">
           <Input onChange={(e) => setCategory(e.target.value)} />
         </Form.Item>
 
-        <Form.Item label="Upload Image">
+        <Form.Item label="Số lượng">
+          <Input onChange={(e) => setTotal(e.target.value)} />
+        </Form.Item>
+
+        <Form.Item label="Ảnh sản phẩm">
           <input type="file" onChange={handleFileChange} />
         </Form.Item>
 
@@ -116,15 +112,17 @@ const UploadProduct = () => {
         </Form.Item>
       </Form>
 
-      <Modal
+      {visible && <Modal
         visible={visible}
         title="Upload Successful"
         onOk={handleOk}
         onCancel={() => setVisible(false)}
       >
-        <p>Your product has been successfully uploaded.</p>
-        <p>Click OK to go back to the main screen.</p>
-      </Modal>
+        <p>Thêm sản phẩm thành công</p>
+        <p>nhấn OK để trở lại</p>
+      </Modal>}
+      
+    </div>
     </div>
   );
 };

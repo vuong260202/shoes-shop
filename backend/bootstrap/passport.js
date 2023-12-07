@@ -36,6 +36,7 @@ module.exports = function (passport, User) {
       user = await User.findOne({where: {
         username: username
       }})
+      console.log("user:", user);
     } catch (err) {
       return done(err)
     }
@@ -68,7 +69,7 @@ module.exports = function (passport, User) {
       return done("Your username or password was incorrect, please try again", false, req.flash("loginMessage", "Sai thông tin đăng nhập"), req.flash("oldEmail", username));
     }
 
-    console.log(req);
+    // console.log("session:", req.session);
 
     // login acl
     req.session.userId = user.id;

@@ -1,72 +1,73 @@
-const Sequelize = require('sequelize');
+const Sequelize = require("sequelize");
 // var bcrypt = require('bcrypt-nodejs');
 
-const tableName = 'transactions'
+const tableName = "transactions";
 
 module.exports = function (sequelize) {
-  const Transaction = sequelize.define('transactions',
+  const Transaction = sequelize.define(
+    "transactions",
     {
       // attributes
       id: {
-        field: 'ID',
+        field: "ID",
         type: Sequelize.INTEGER,
         autoIncrement: true,
-        primaryKey: true
+        primaryKey: true,
       },
       userId: {
-        field: 'USER_ID',
+        field: "USER_ID",
         type: Sequelize.INTEGER,
-        allowNull: true
+        allowNull: true,
       },
-      numberPhone:{
-        field: 'NUMBER_PHONE',
+      numberPhone: {
+        field: "NUMBER_PHONE",
         type: Sequelize.STRING(100),
-        allowNull: true
+        allowNull: true,
       },
       name: {
-        field: 'NAME',
+        field: "NAME",
         type: Sequelize.STRING(100),
-        defaultValue: '',
+        defaultValue: "",
         allowNull: false,
       },
       productId: {
-        field: 'PRODUCT_ID',
+        field: "PRODUCT_ID",
         type: Sequelize.INTEGER,
-        allowNull: true
+        allowNull: true,
       },
       total: {
-        field: 'TOTAL',
+        field: "TOTAL",
         type: Sequelize.STRING(100),
-        defaultValue: '',
+        defaultValue: "",
         allowNull: false,
       },
       address: {
-        field: 'ADDRESS',
+        field: "ADDRESS",
         type: Sequelize.STRING(100),
-        defaultValue: '',
+        defaultValue: "",
         allowNull: false,
       },
       amount: {
-        field: 'AMOUNT',
+        field: "AMOUNT",
         type: Sequelize.INTEGER,
-        allowNull: true
+        allowNull: true,
       },
       status: {
-        field: 'STATUS',
-        type: Sequelize.ENUM('pending', 'done'),
-        defaultValue: 'pending'
+        field: "STATUS",
+        type: Sequelize.ENUM("pending", "done", "process"),
+        defaultValue: "pending",
       },
       createdAt: {
-        field: 'CREATED_AT',
-        type: 'TIMESTAMP',
+        field: "CREATED_AT",
+        type: "TIMESTAMP",
         allowNull: false,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
+        defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
       },
       doneAt: {
-        field: 'DONE_AT',
-        type: 'TIMESTAMP',
+        field: "DONE_AT",
+        type: "TIMESTAMP",
         allowNull: false,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
+        defaultValue: Sequelize.literal("CURRENT_TIMESTAMP"),
       },
     },
     {
@@ -75,14 +76,13 @@ module.exports = function (sequelize) {
     }
   );
 
-  Transaction.sync({force: false, alter: true}).then(() => {
+  Transaction.sync({ force: false, alter: true }).then(() => {
     if (!global.sequelizeModels) {
-      global.sequelizeModels = {}
+      global.sequelizeModels = {};
     }
-    global.sequelizeModels.Transaction = Transaction
-    console.log('sync Product done')
-
+    global.sequelizeModels.Transaction = Transaction;
+    console.log("sync Product done");
   });
 
-  return Transaction
-}
+  return Transaction;
+};

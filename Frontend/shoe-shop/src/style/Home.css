@@ -37,14 +37,66 @@
 }
 
 .pageination {
-    width: 100%;
-    text-align: center;
-    align-items: center;
-    display: flex;
+  display: flex;
+  flex-direction: row; /* Sắp xếp theo chiều ngang */
+  align-items: center; /* Căn giữa theo chiều dọc */
+  justify-content: center; /* Căn giữa theo chiều ngang */
+  justify-content: space-between;
+  /* text-align: center; Canh lề văn bản trong thẻ a */
 }
 
-.pageination > a {
-    width: 20%;
-    text-align: right;
-    display: flex;
+.pageination a {
+  font-size: 16px; /* Cỡ chữ của thẻ a */
+  font-weight: bold; /* Đậm */
+  color: #333; /* Màu chữ */
+}
+
+/* Đặt margin và padding cho các phần tử của pagination */
+.ant-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  list-style: none;
+  padding: 0;
+  margin: 20px 0; /* Thay đổi giá trị margin tùy thuộc vào vị trí bạn muốn đặt pagination */
+}
+
+/* Đặt kiểu cho mỗi phần tử */
+.ant-pagination li {
+  margin: 0;
+  padding: 0 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Đặt kiểu cho nút trước, nút sau */
+.ant-pagination-prev,
+.ant-pagination-next {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Đặt kiểu cho các nút trong pagination */
+.ant-pagination-item-link {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 4px 12px;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+/* Đặt kiểu cho phần tử active */
+.ant-pagination-item-active a {
+  font-weight: bold;
+  color: #1890ff; /* Màu sẽ thay đổi tùy thuộc vào thiết kế của bạn */
+}
+
+/* Đặt kiểu cho phần tử khi hover */
+.ant-pagination-item a:hover {
+  color: #1890ff; /* Màu sẽ thay đổi tùy thuộc vào thiết kế của bạn */
 }

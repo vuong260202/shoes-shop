@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import "../style/Home.css";
 import Header from './Header';
+import FetchData from './FetchData';
 
 const ProductItem = ({ product }) => {
   return (
@@ -15,7 +16,7 @@ const ProductItem = ({ product }) => {
           style={{ width: "200px", height: "auto" }}
         />
       </a>
-      <a href={`/product/${product.id}`}>Tên sản phẩm: {product.productName}</a>
+      <a href={`/product/${product.id}`}>{product.productName}</a>
     </li>
   );
 };
@@ -28,9 +29,6 @@ const Home = () => {
   const navigate = useNavigate()
 
   const handleSearch = async (searchQuery) => {
-    const token = localStorage.getItem('token')
-
-    try {
       const conditions = {page: page}
 
       if (searchQuery) {
@@ -49,24 +47,11 @@ const Home = () => {
         }
       }
 
-      const response = await axios.post(
-        "http://localhost:3000/product/filter-product",
-        conditions,
-        {
-          headers:{
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      setProducts(response.data.data.products);
-      setTotal(response.data.data.total);
-    } catch (error) {
-      if (error.response && error.response.status === 401) {
-        localStorage.setItem('token', 'null');
-      }
-
-      console.error("Error fetching data:", error);
-    }
+      FetchData.filterProducts(conditions).then((res => {
+        console.log(res.data.data.products);
+        setProducts(res.data.data.products);
+        setTotal(res.data.data.total);
+      }))
   };
 
   const handlePage = (newPage) => {
@@ -104,7 +89,7 @@ const Home = () => {
           </ul>
         )}
       </div>
-      <div className='pageination'>
+      <div className="pageination">
         <Pagination current={page} defaultCurrent={1} total={total} onChange={(newPage) => handlePage(newPage)} />
         <a>total: {total}</a>
       </div>
