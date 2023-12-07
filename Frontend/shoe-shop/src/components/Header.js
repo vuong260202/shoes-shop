@@ -47,15 +47,15 @@ const Header = ({ onSearch }) => {
     role === "admin"
       ? [
           {
-            label: <a onClick={handleUpload}> Thêm sản phẩm  </a>,
+            label: <a onClick={handleUpload}> Thêm sản phẩm </a>,
             key: "0",
           },
           {
-            label: <a onClick={handleProduct}> Thông tin sản phẩm  </a>,
+            label: <a onClick={handleProduct}> Thông tin sản phẩm </a>,
             key: "1",
           },
           {
-            label: <a onClick={handleTransaction}> Giao dịch chờ  </a>,
+            label: <a onClick={handleTransaction}> Giao dịch chờ </a>,
             key: "2",
           },
           {
@@ -68,6 +68,10 @@ const Header = ({ onSearch }) => {
           },
         ]
       : [
+          {
+            label: <a onClick={handlePassword}> Đổi mật khẩu </a>,
+            key: "4",
+          },
           {
             label: <a onClick={handleLogout}> Thoát </a>,
             key: "5",

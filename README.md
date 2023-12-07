@@ -33,7 +33,6 @@ cài node.js
 
 
 
-
 # admin account
 admin 1
 
