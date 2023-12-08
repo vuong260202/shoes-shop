@@ -22,9 +22,21 @@ const ProductDetail = () => {
   };
 
   const handleTransaction = async () => {
+    let productName = product[0].productName;
+    let conditions = {
+      userId,
+      productId,
+      productName,
+      name,
+      numberPhone,
+      address,
+      total,
+    }
+    console.log("---", conditions);
     FetchData.transaction({
       userId,
       productId,
+      productName,
       name,
       numberPhone,
       address,
@@ -64,9 +76,11 @@ const ProductDetail = () => {
           <img
             src={"http://localhost:3001/" + item.path}
             alt={`Product ${item.id}`}
-            style={{ width: "300px", height: "300px" }}
+            style={{ width: "40%", height: "auto" }}
           />
-          <div>
+          <div style={{
+            width: '60%'
+          }}>
             <p>Tên sản phẩm: {item.productName}</p>
             <p>Giá: {item.price}</p>
             <p>size: {item.size}</p>
@@ -79,51 +93,55 @@ const ProductDetail = () => {
       ))}
 
       {showForm && (
-        <Form
-          labelCol={{
-            span: 4,
-          }}
-          wrapperCol={{
-            span: 14,
-          }}
-          layout="horizontal"
-          // disabled={componentDisabled}
-          style={{
-            maxWidth: 600,
-          }}
-        >
-          <Form.Item label="Họ&Tên">
-            <Input
-              type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
-          </Form.Item>
-          <Form.Item label="Số điện thoại">
-            <Input
-              type="text"
-              value={numberPhone}
-              onChange={(e) => setNumberPhone(e.target.value)}
-            />
-          </Form.Item>
-          <Form.Item label="Địa chỉ">
-            <Input
-              type="text"
-              value={address}
-              onChange={(e) => setAddress(e.target.value)}
-            />
-          </Form.Item>
-          <Form.Item label="Số lượng">
-            <Input
-              type="number"
-              value={total}
-              onChange={(e) => setTotal(parseInt(e.target.value, 10))}
-            />
-          </Form.Item>
-          <Form.Item>
-            <button onClick={handleTransaction}>Xác nhận</button>
-          </Form.Item>
-        </Form>
+        <div style={{
+          maxWidth: '600px',
+          textAlign: 'center',
+          width: '100%',
+      }}><Form
+      labelCol={{
+        span: 4,
+      }}
+      wrapperCol={{
+        span: 14,
+      }}
+      layout="horizontal"
+      // disabled={componentDisabled}
+      style={{
+        maxWidth: 600,
+      }}
+    >
+      <Form.Item label="Họ&Tên">
+        <Input
+          type="text"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
+      </Form.Item>
+      <Form.Item label="Số điện thoại">
+        <Input
+          type="text"
+          value={numberPhone}
+          onChange={(e) => setNumberPhone(e.target.value)}
+        />
+      </Form.Item>
+      <Form.Item label="Địa chỉ">
+        <Input
+          type="text"
+          value={address}
+          onChange={(e) => setAddress(e.target.value)}
+        />
+      </Form.Item>
+      <Form.Item label="Số lượng">
+        <Input
+          type="number"
+          value={total}
+          onChange={(e) => setTotal(parseInt(e.target.value, 10))}
+        />
+      </Form.Item>
+      <Form.Item>
+        <button onClick={handleTransaction}>Xác nhận</button>
+      </Form.Item>
+    </Form> </div>
       )}
     </div>
   );

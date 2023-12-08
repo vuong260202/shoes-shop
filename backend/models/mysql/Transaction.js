@@ -35,6 +35,12 @@ module.exports = function (sequelize) {
         type: Sequelize.INTEGER,
         allowNull: true,
       },
+      productName: {
+        field: "PRODUCT_NAME",
+        type: Sequelize.STRING(100),
+        defaultValue: "",
+        allowNull: false,
+      },
       total: {
         field: "TOTAL",
         type: Sequelize.STRING(100),

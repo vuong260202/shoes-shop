@@ -3,7 +3,7 @@ import axios from "axios";
 const transaction = async (conditions) => {
   try {
     const response = await axios.post(
-      `http://localhost:3000/product/add-transaction`,
+      `http://localhost:3000/transaction/add-transaction`,
       conditions,
       {
         headers: {
@@ -95,9 +95,7 @@ const login = async (conditions) => {
 
     return response;
   } catch (error) {
-    if (error.response && error.response.status === 401) {
-      localStorage.setItem("token", "null");
-    }
+    return error.response;
 
     console.error("Error fetching product:", error);
   }

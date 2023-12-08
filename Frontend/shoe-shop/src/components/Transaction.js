@@ -64,7 +64,7 @@ const App = () => {
         productName: transaction.productName,
         total: transaction.total,
         amount: transaction.amount,
-        createAt: transaction.createAt,
+        createAt: transaction.createdAt,
         amountSum: transaction.amountSum,
         status: transaction.status,
       }));

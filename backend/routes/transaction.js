@@ -13,15 +13,22 @@ router.get(
       console.log(req.body);
 
       let Transaction = global.sequelizeModels.Transaction;
+      let Product = global.sequelizeModels.Product;
 
       let transactions = await Transaction.findAndCountAll();
 
       let total = transactions.count;
-      transactions = transactions.rows.map(async (transaction) => {
-        console.log(transaction);
+      transactions = transactions.rows.map(transaction => {
+        let transaction2 = transaction.dataValues;
+        transaction2.amountSum = transaction.amount * transaction.total
+        return transaction2;
       });
 
-      console.log("transactions", transactions);
+      // transactions.map(transaction => {
+      //   return (await transaction)
+      // })
+
+      console.log("transactions",(transactions[0]));
       return res.status(200).json({
         status: 200,
         data: {
@@ -83,6 +90,9 @@ router.post("/add-transaction", webUtils.isLoggedIn, async function (req, res) {
     newTransaction.name = req.body.name;
     newTransaction.total = req.body.total;
     newTransaction.address = req.body.address;
+    console.log("productName: ------", req.body.productName);
+    newTransaction.productName = req.body.productName;
+    console.log("productName: ------", newTransaction.productName);
     newTransaction.numberPhone = req.body.numberPhone;
     newTransaction.status = "pending";
     newTransaction.createdAt = new Date();

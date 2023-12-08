@@ -106,7 +106,6 @@ router.post(
       });
     }
 
-    console.log(products);
 
     return res.status(200).json({
       status: 200,
@@ -222,46 +221,6 @@ router.post(
     }
   }
 );
-
-router.post("/add-transaction", webUtils.isLoggedIn, async function (req, res) {
-  try {
-    console.log(req.body);
-
-    let Transaction = global.sequelizeModels.Transaction;
-    let product = await global.sequelizeModels.Product.findOne({
-      id: req.body.productId,
-    });
-
-    let newTransaction = new Transaction();
-    newTransaction.userId = req.body.userId;
-    newTransaction.productId = req.body.productId;
-    newTransaction.name = req.body.name;
-    newTransaction.total = req.body.total;
-    newTransaction.address = req.body.address;
-    newTransaction.numberPhone = req.body.numberPhone;
-    newTransaction.status = "pending";
-    newTransaction.createdAt = new Date();
-    newTransaction.amount = product.price * req.body.total;
-
-    product.total = product.total - req.body.total;
-
-    await product.save();
-    await newTransaction.save();
-
-    return res.status(200).json({
-      status: 200,
-      data: {
-        newTransaction,
-      },
-    });
-  } catch (e) {
-    console.log("error: ", e);
-    return res.status(500).json({
-      status: 500,
-      message: "Server internal error.",
-    });
-  }
-});
 
 router.post("/update-product", async (req, res) => {
   console.log(req.body);
