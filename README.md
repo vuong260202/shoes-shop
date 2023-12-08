@@ -34,9 +34,9 @@ cài node.js
 
 
 # admin account
-username: admin 
-password: 1
+username: ```admin```
+password: ```1```
 
 # user account
-username: user 
-password: 1
+username: ```user```
+password: ```1```
