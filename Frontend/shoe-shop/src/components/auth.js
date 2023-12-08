@@ -98,25 +98,24 @@ const Signup = () => {
   
     const handleLogin = async () => {
       try {
-        const response = await axios.post('http://localhost:3000/auth/signup', {
+        FetchData.signup({
           username,
           password,
           email,
           fullname,
-        });
-    
-        if (response.status === 200) {
-          setErrorMessage('')
-          console.log('Signup successful');
-          navigate('/auth/login')
-        } else {
-          console.log('Login failed');
-          setErrorMessage(response.data.message);
-        }
+        }).then((res) => {
+          if (res.status === 200) {
+            setErrorMessage('')
+            console.log('Signup successful');
+            navigate('/auth/login')
+          } else {
+            console.log('Signup failed');
+            setErrorMessage(res.data.message);
+          }
+        })        
       } catch (error) {
           console.error('Error during login:', error);
           setErrorMessage(error.response.data.message);
-        // }
       }
     };
   
@@ -130,7 +129,6 @@ const Signup = () => {
               span: 14,
             }}
             layout="horizontal"
-            // disabled={componentDisabled}
             style={{
               maxWidth: 600,
             }}>

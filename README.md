@@ -4,15 +4,15 @@ git clone "https://github.com/vuong260202/shoes-shop.git"
 
 # chạy song song 2 terminal
 ## backend terminal
-`cd backend`
-`npm install`
+```cd backend```
+```npm install```
 
 ### chạy backend
-`npm start`
+```npm start```
 
 ## frontend terminal
-`cd Frontend/shoe-shop`
-`npm install`
+```cd Frontend/shoe-shop```
+```npm install```
 
 ### chạy frontend
 `npm start`

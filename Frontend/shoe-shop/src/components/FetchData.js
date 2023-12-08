@@ -102,7 +102,15 @@ const login = async (conditions) => {
 };
 
 const logout = async () => {};
-const signup = async () => {};
+const signup = async (attributes) => {
+  try {
+    const res = await axios.post("http://localhost:3000/auth/signup", attributes);
+
+    return res;
+  } catch (error) {
+    return error.response;
+  }
+};
 
 const getTransaction = async () => {
     try {

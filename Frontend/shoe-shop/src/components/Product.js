@@ -110,9 +110,11 @@ const App = () => {
     ],
   };
   
+  const handleSearch = (search) => {}
+
   return (
     <div>
-      <Header></Header>
+      <Header onSearch={handleSearch}/>
       <Table rowSelection={rowSelection} columns={columns} dataSource={data} />;
     </div>
   );
